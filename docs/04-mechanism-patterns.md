@@ -352,6 +352,9 @@ def calculate_scorable_bytes(miner_bytes, total_network_bytes):
 - Ground truth becomes available later
 - Scoring requires temporal delay
 
+### When NOT to Use (Prefer Open Source Design Instead)
+If miners are building **agents with complex decision logic** (e.g., LLM trading agents, autonomous systems), consider having miners **commit their agent code** rather than querying for predictions. Validators run the committed code in a sandboxed environment and score based on outcomes. This provides transparency, enables knowledge sharing, and constrains the attack surface. See **Open Source vs Black Box Subnet Design** in [08-incentive-design.md](08-incentive-design.md).
+
 ### Architecture
 ```
 ┌─────────────┐         ┌──────────────┐
