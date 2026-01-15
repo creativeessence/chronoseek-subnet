@@ -39,6 +39,7 @@ files_by_category:
     chutes.integration.yaml: "SN64 LLM inference API"
     basilica.containers.yaml: "container execution for agent subnets"
     hippius.integration.yaml: "SN75 decentralized storage, S3/IPFS, provenance"
+    dataverse.integration.yaml: "SN13 social data API, X and Reddit scraping"
     sdk.quick_reference.yaml: "Python SDK patterns, token trading"
     btcli.reference.yaml: "CLI command reference"
     local.development.yaml: "local subtensor setup"
@@ -97,6 +98,10 @@ task_routing:
       - miner_artifact_submission
       - provenance_verification
       - large_file_distribution
+
+  dataverse_social_data:
+    load:
+      - dataverse.integration.yaml
 
   cli_operations:
     load:
