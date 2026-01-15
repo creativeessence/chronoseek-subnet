@@ -39,6 +39,8 @@ Miners can commit arbitrary information to their on-chain metadata, enabling val
 - IP addresses for any protocol
 - Any other connection information
 
+For commit-reveal commitments (data that's encrypted until a future block using drand timelock encryption), see **[19-chain-commitments.md](19-chain-commitments.md)**.
+
 **Recommendation:** Always use custom HTTP APIs with Epistula signing. Never use Axon/Dendrite for new development.
 
 ---

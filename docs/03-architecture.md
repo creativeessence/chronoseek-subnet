@@ -145,7 +145,7 @@ Miners can store arbitrary connection information in their on-chain metadata:
 - IP addresses for any protocol
 - Any other discovery information
 
-Validators read this committed data to know how to communicate with each miner.
+Validators read this committed data to know how to communicate with each miner. For full details on commitment APIs and commit-reveal with drand timelock encryption, see **[19-chain-commitments.md](19-chain-commitments.md)**.
 
 ### Recommended: Epistula Signed HTTP
 The standard pattern for validator-miner communication:

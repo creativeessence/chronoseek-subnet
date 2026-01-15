@@ -44,6 +44,9 @@ This guide is designed for LLMs and developers who need to:
 ### External Integrations
 18. **[18-chutes-integration.md](18-chutes-integration.md)** - Integrating Chutes (SN64) for LLM inference, miner model deployment, TEE, and free validator queries
 
+### Chain Features
+19. **[19-chain-commitments.md](19-chain-commitments.md)** - On-chain commitments and commit-reveal with drand timelock encryption
+
 ## Key Insights
 
 ### Mechanism Architecture Diversity
@@ -94,7 +97,8 @@ This creates ecosystem synergy—your subnet benefits from the security and reli
 **Not all hyperparameters are changeable** even though they appear in docs:
 - `tempo` - NOT changeable
 - `max_allowed_uids` - NOT changeable
-- Don't use commit-reveal unless absolutely necessary (weight copying is a mature subnet problem)
+- Don't use commit-reveal **weights** unless absolutely necessary (weight copying is a mature subnet problem)
+- Commit-reveal **data** (drand timelock encryption) is useful for many subnet designs—see [19-chain-commitments.md](19-chain-commitments.md)
 
 Choose your architecture based on your commodity type, not by copying a template.
 
@@ -123,6 +127,9 @@ Read document 16 for the complete step-by-step walkthrough
 
 ### "How do I integrate Chutes for LLM validation?"
 Read document 18 for Chutes integration patterns, TEE, and validator-free queries
+
+### "How do I use on-chain commitments or commit-reveal?"
+Read document 19 for commitment APIs, drand timelock encryption, and usage patterns
 
 ## Code Anchors (Where Truth Lives)
 

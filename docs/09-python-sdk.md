@@ -87,6 +87,32 @@ success = subtensor.commit_weights(
     weights=[0.5, 0.3, 0.2]
 )
 
+# Set basic commitment (immediate visibility)
+response = subtensor.set_commitment(
+    wallet=wallet,
+    netuid=1,
+    data="https://api.myminer.com/v1/inference"
+)
+
+# Set commit-reveal commitment (revealed after blocks_until_reveal)
+response = subtensor.set_reveal_commitment(
+    wallet=wallet,
+    netuid=1,
+    data="secret_model_hash_abc123",
+    blocks_until_reveal=360,  # ~72 minutes on mainnet
+    block_time=12  # 12 for mainnet, 0.25 for fast-blocks
+)
+
+# Read commitment by UID
+commitment = subtensor.get_commitment(netuid=1, uid=42)
+
+# Read all commitments in subnet
+all_commits = subtensor.get_all_commitments(netuid=1)
+
+# Read revealed commitments
+revealed = subtensor.get_revealed_commitment(netuid=1, uid=42)
+all_revealed = subtensor.get_all_revealed_commitments(netuid=1)
+
 # Staking
 success = subtensor.add_stake(
     wallet=wallet,
