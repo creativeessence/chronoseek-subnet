@@ -905,6 +905,43 @@ async def verify_miner_container(miner_uid: int):
     return score_result(result)
 ```
 
+### Agent/Environment Subnets: Use Basilica
+
+**For subnets where miners submit executable code** (agents, trading bots, evaluation environments, task solvers), validators should **run the miner's code themselves** rather than querying miner endpoints.
+
+The correct pattern:
+1. Miners build Docker images with their agent/environment
+2. Miners push to Docker Hub and commit the image URL to chain
+3. Validators pull images and run them in **Basilica** sandboxes
+4. Pass **Chutes API keys** so containers can access LLM inference
+5. Score based on execution results
+
+```python
+import affinetes as af_env
+
+# Validator runs miner's container via Basilica
+env = af_env.load_env(
+    mode="basilica",
+    image=miner_image_url,  # From chain commitment
+    env_vars={"CHUTES_API_KEY": os.getenv("CHUTES_API_KEY")}
+)
+
+try:
+    result = await env.evaluate(task_id=42, model="Qwen/Qwen3-32B")
+    score = result.get("score", 0)
+finally:
+    await env.cleanup()
+```
+
+**Why this is superior to query-based design:**
+- The Docker image IS the submission — fully auditable
+- Validators run the exact code miners committed — no black box
+- Miners don't need infrastructure — just Docker Hub
+- Sandboxed execution via Basilica — secure and reproducible
+- LLM inference via Chutes — containers don't need GPUs
+
+See [affine_basilica_integration.md](affine_basilica_integration.md) for complete implementation details.
+
 ### When Black Box Might Be Acceptable
 
 There are limited cases where query-based black box design is reasonable:
@@ -932,6 +969,7 @@ If you have an existing black box subnet:
 
 ### Subnet Architecture
 - [ ] **Open source design preferred** — miners commit code/models to chain (GitHub, HuggingFace, Chutes, Docker) rather than hiding behind black box endpoints
+- [ ] **For agent/environment subnets** — use Basilica to run miner Docker containers (see [affine_basilica_integration.md](affine_basilica_integration.md))
 - [ ] If using black box endpoints, documented why it's necessary for this specific case
 
 ### Ground Truth & Trust

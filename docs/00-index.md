@@ -43,9 +43,10 @@ This guide is designed for LLMs and developers who need to:
 
 ### External Integrations
 18. **[18-chutes-integration.md](18-chutes-integration.md)** - Integrating Chutes (SN64) for LLM inference, miner model deployment, TEE, and free validator queries
+19. **[affine_basilica_integration.md](affine_basilica_integration.md)** - **For agent/environment subnets**: Docker container submissions via Basilica sandboxes
 
 ### Chain Features
-19. **[19-chain-commitments.md](19-chain-commitments.md)** - On-chain commitments and commit-reveal with drand timelock encryption
+20. **[19-chain-commitments.md](19-chain-commitments.md)** - On-chain commitments and commit-reveal with drand timelock encryption
 
 ## Key Insights
 
@@ -127,6 +128,9 @@ Read document 16 for the complete step-by-step walkthrough
 
 ### "How do I integrate Chutes for LLM validation?"
 Read document 18 for Chutes integration patterns, TEE, and validator-free queries
+
+### "I'm building an agent/environment subnet (trading bots, task solvers, etc.)"
+Read [affine_basilica_integration.md](affine_basilica_integration.md) — miners submit Docker containers, validators run them via Basilica sandboxes with Chutes for LLM inference. **Do not use query-based patterns for agent subnets.**
 
 ### "How do I use on-chain commitments or commit-reveal?"
 Read document 19 for commitment APIs, drand timelock encryption, and usage patterns

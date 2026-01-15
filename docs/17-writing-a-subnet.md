@@ -166,6 +166,58 @@ Add complexity **only** when you have evidence you need it:
 
 Evidence comes from running on testnet or mainnet with real participants. Not from imagination.
 
+## Agent/Environment Subnets: Use Basilica
+
+If your subnet involves miners creating **agents, environments, or executable logic** (trading bots, evaluation harnesses, task solvers, etc.), **do not use the query-based pattern** where miners run their own endpoints.
+
+Instead, use the **Affinetes + Basilica** pattern:
+
+1. **Miners build Docker images** containing their agent code
+2. **Miners push to Docker Hub** and commit the image URL to chain
+3. **Validators pull the images** and run them in sandboxed Basilica pods
+4. **Containers use Chutes** for LLM inference (no GPU needed in container)
+
+```
+Miner: Build Docker → Push to Hub → Commit URL to chain
+                                           ↓
+Validator: Read URL → Pull image → Run on Basilica → Pass Chutes key → Score
+```
+
+**Why this is better than query-based design:**
+
+| Query-Based (Wrong) | Basilica (Correct) |
+|---------------------|-------------------|
+| Miner runs own server | Miner just commits code |
+| Validator queries black box | Validator runs the actual code |
+| Can't audit what's running | Docker image IS the submission |
+| Miner needs infrastructure | Miner needs only Docker Hub |
+| Unbounded attack surface | Sandboxed, reproducible |
+
+**Example: Trading Agent Subnet**
+
+```python
+# Miner's env.py - their trading agent
+class Actor:
+    async def trade(self, market_data: dict, model: str = "Qwen/Qwen3-32B") -> dict:
+        # Use Chutes for LLM reasoning
+        client = openai.AsyncOpenAI(
+            base_url="https://llm.chutes.ai/v1",
+            api_key=os.getenv("CHUTES_API_KEY")
+        )
+        # Agent logic here...
+        return {"signal": "long", "confidence": 0.8}
+
+# Validator runs it via Basilica
+env = af_env.load_env(
+    mode="basilica",
+    image="miner/trading-agent:v1",  # From chain
+    env_vars={"CHUTES_API_KEY": os.getenv("CHUTES_API_KEY")}
+)
+result = await env.trade(market_data)
+```
+
+See [affine_basilica_integration.md](affine_basilica_integration.md) for complete implementation details.
+
 ## Summary
 
 | Question | Answer |
