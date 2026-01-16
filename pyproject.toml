@@ -1,12 +1,25 @@
-[project]
-name = "chi"
+[tool.poetry]
+name = "chronoseek-subnet"
 version = "0.1.0"
-description = "Add your description here"
+description = "Semantic Video Moment Retrieval (SVMR) Subnet for Bittensor"
+authors = ["CreativeEssence <dalyconnor528@gmail.com>"]
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "bittensor>=8.0.0",
-    "bittensor-cli>=9.17.0",
-    "bittensor-wallet>=2.0.0",
-    "click>=8.0.0",
+packages = [
+    { include = "chronoseek" }
 ]
+
+[tool.poetry.dependencies]
+python = ">=3.12, <3.15"
+bittensor = ">=8.0.0"
+bittensor-cli = ">=9.17.0"
+bittensor-wallet = ">=2.0.0"
+click = ">=8.0.0"
+fastapi = ">=0.109.0"
+uvicorn = ">=0.27.0"
+httpx = ">=0.26.0"
+pydantic = ">=2.0.0"
+numpy = ">=1.24.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
