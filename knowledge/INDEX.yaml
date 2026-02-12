@@ -38,7 +38,13 @@ files_by_category:
   integrations:
     chutes.integration.yaml: "SN64 LLM inference API"
     basilica.containers.yaml: "container execution for agent subnets"
+<<<<<<< HEAD
     hippius.integration.yaml: "SN13 decentralized storage, S3/IPFS, provenance"
+    desearch.integration.yaml: "SN22 real-time search, Twitter/Reddit/web data"
+=======
+    hippius.integration.yaml: "SN75 decentralized storage, S3/IPFS, provenance"
+    dataverse.integration.yaml: "SN13 social data API, X and Reddit scraping"
+>>>>>>> 51f1cec7a22db85aa7412760f35fc2c5cfc43b69
     sdk.quick_reference.yaml: "Python SDK patterns, token trading"
     btcli.reference.yaml: "CLI command reference"
     local.development.yaml: "local subtensor setup"
@@ -47,6 +53,19 @@ files_by_category:
   guidance:
     design_flow.yaml: "decision tree for mechanism selection"
     load_order.yaml: "context loading sequences by task"
+
+  example_subnets:
+    example.affine_sn120.yaml: "Affine - multi-env Pareto scoring for reasoning models"
+    example.numinous_sn6.yaml: "Numinous - forecasting agents with Brier scoring"
+    example.404gen_sn17.yaml: "404-GEN - 3D asset generation from text prompts"
+    example.zeus_sn18.yaml: "Zeus - weather forecasting with ERA5 ground truth"
+    example.kinitro_sn26.yaml: "Kinitro - robotic agent competitions on MetaWorld"
+    example.bitmind_sn34.yaml: "BitMind GAS - adversarial deepfake detection"
+    example.lium_sn51.yaml: "Lium - GPU rental marketplace with collateral"
+    example.gradients_sn56.yaml: "Gradients/G.O.D - model fine-tuning tournaments"
+    example.nova_sn68.yaml: "Nova - drug discovery with deterministic oracle"
+    example.hippius_sn75.yaml: "Hippius - decentralized storage and compute"
+    example.swarm_sn124.yaml: "Swarm - drone autopilot policy competition"
 
 task_routing:
   designing_new_subnet:
@@ -98,6 +117,23 @@ task_routing:
       - provenance_verification
       - large_file_distribution
 
+<<<<<<< HEAD
+  desearch_real_time:
+    load:
+      - desearch.integration.yaml
+      - validator.contract.yaml
+    use_when:
+      - real_time_social_signals
+      - live_twitter_reddit_data
+      - agent_context_enrichment
+      - event_verification
+      - sentiment_analysis
+=======
+  dataverse_social_data:
+    load:
+      - dataverse.integration.yaml
+>>>>>>> 51f1cec7a22db85aa7412760f35fc2c5cfc43b69
+
   cli_operations:
     load:
       - btcli.reference.yaml
@@ -105,6 +141,24 @@ task_routing:
   token_trading:
     load:
       - sdk.quick_reference.yaml
+
+  studying_example_subnets:
+    load:
+      - subnet.invariants.yaml
+      - "{example_file}.yaml"
+    then: "load corresponding pattern files referenced in knowledge_connections"
+    available_examples:
+      - example.affine_sn120.yaml
+      - example.numinous_sn6.yaml
+      - example.404gen_sn17.yaml
+      - example.zeus_sn18.yaml
+      - example.kinitro_sn26.yaml
+      - example.bitmind_sn34.yaml
+      - example.lium_sn51.yaml
+      - example.gradients_sn56.yaml
+      - example.nova_sn68.yaml
+      - example.hippius_sn75.yaml
+      - example.swarm_sn124.yaml
 
 critical_doctrines:
   - "Validator-only development: ONLY write validator.py, NEVER miner code"
@@ -118,3 +172,4 @@ critical_doctrines:
   - "Commit-reveal weights: mature subnet tool only"
   - "Containers required when miners compete on software"
   - "Provenance via Hippius: timestamp data to prove temporal ordering"
+  - "Real-time data via Desearch: live Twitter/Reddit/web for agent reasoning"
